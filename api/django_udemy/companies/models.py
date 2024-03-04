@@ -1,5 +1,4 @@
 from django.db import models
-from django.forms import URLField
 from django.utils.timezone import now
 
 
@@ -16,7 +15,7 @@ class Company(models.Model):
         max_length=30,
     )
     last_update = models.DateTimeField(default=now, editable=True)
-    application_link = URLField()
+    application_link = models.URLField(default="")
     notes = models.CharField(max_length=100, blank=True)
 
     def __str__(self) -> str:
