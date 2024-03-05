@@ -9,11 +9,13 @@ from api.django_udemy.companies.models import Company
 
 
 @pytest.mark.django_db
-class TestGetCompanies(TestCase):
+class BasicCompanyApiTestCase(TestCase):
     def setUp(self) -> None:
         self.client = Client()
         self.companies_url = reverse("companies-list")
 
+
+class TestGetCompanies(BasicCompanyApiTestCase):
     def test_zero_companies_should_return_empty_list(self):
         response = self.client.get(self.companies_url)
         self.assertEqual(response.status_code, 200)
@@ -30,3 +32,12 @@ class TestGetCompanies(TestCase):
         self.assertEqual(response_content.get("notes"), "")
 
         test_company.delete()
+
+
+class TestPostCompanies(BasicCompanyApiTestCase):
+    def test_create_company_without_arguments_fail(self):
+        response = self.client.post(path=self.companies_url)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            json.loads(response.content), {"name": ["This field is required."]}
+        )
