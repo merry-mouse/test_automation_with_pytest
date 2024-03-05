@@ -1,6 +1,6 @@
 from rest_framework import routers
 
-from .views import CompanyViewSet
+from api.django_udemy.companies.views import CompanyViewSet
 
 companies_router = routers.DefaultRouter()
 companies_router.register(
