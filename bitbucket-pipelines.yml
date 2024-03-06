@@ -10,6 +10,6 @@ pipelines:
           - pip install --upgrade pip
           - pip install pipenv --upgrade
           - pipenv install --system
-          - export PYTHONPATH=/Users/stash/Desktop/learning/udemy/pytest_automation_django_app/my-pytest-course:/Users/stash/Desktop/learning/udemy/pytest_automation_django_app/my-pytest-course/api:/Users/stash/Desktop/learning/udemy/pytest_automation_django_app/my-pytest-course/api/django_udemy
+          - export PYTHONPATH=/api/django_udemy
           - export DJANGO_SETTINGS_MODULE="django_udemy.settings"
           - pytest api/django_udemy -s -v --durations=0
