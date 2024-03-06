@@ -12,4 +12,4 @@ pipelines:
           - pipenv install --system
           - export PYTHONPATH=/api/django_udemy
           - export DJANGO_SETTINGS_MODULE="django_udemy.settings"
-          - pytest api/django_udemy/tests -s -v --durations=0
+          - pytest  -s -v --durations=0
