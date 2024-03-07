@@ -11,4 +11,12 @@ pipelines:
           - pip install pipenv --upgrade
           - pipenv install --system
           - pytest api/django_udemy -s -v --durations=0
+    - step:
+        name: "Fibonacci tests"
+        caches:
+          - pip
+        script:
+          - pip install --upgrade pip
+          - pip install pipenv --upgrade
+          - pipenv install --system
           - pytest fibonacci -s -v --durations=0
