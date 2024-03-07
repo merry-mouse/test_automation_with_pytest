@@ -11,3 +11,4 @@ pipelines:
           - pip install pipenv --upgrade
           - pipenv install --system
           - pytest api/django_udemy -s -v --durations=0
+          - pytest fibonacci -s -v --durations=0 --cov=.
