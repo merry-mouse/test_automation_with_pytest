@@ -19,8 +19,10 @@ from django.contrib import admin
 from django.urls import include, path
 
 from api.django_udemy.companies.urls import companies_router
+from api.django_udemy.companies.views import fibonacci_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(companies_router.urls)),
+    path("fibonacci", fibonacci_view, name="fibonacci"),
 ]
