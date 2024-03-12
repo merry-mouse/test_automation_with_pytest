@@ -1,4 +1,4 @@
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.request import Request

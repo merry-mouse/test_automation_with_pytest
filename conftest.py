@@ -19,7 +19,9 @@ class PerformanceException(Exception):
         self.limit = limit
 
     def __str__(self):
-        return f"Performance test failed, runtime: {self.runtime.total_seconds()}, limit: {self.limit.total_seconds()}"
+        return f"Performance test failed, runtime:\
+              {self.runtime.total_seconds()},\
+                  limit: {self.limit.total_seconds()}"
 
 
 def track_performance(method: Callable, runtime_limit=timedelta(seconds=2)):
