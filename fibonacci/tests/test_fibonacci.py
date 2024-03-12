@@ -4,8 +4,6 @@ import pytest
 from django.test import Client
 from django.urls import reverse
 
-from api.django_udemy.companies.views import fibonacci_view
-
 fibonacci_url = reverse("fibonacci")
 
 
