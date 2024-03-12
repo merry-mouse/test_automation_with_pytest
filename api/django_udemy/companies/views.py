@@ -36,6 +36,10 @@ class CompanyViewSet(ModelViewSet):
 
 @api_view(http_method_names=["GET"])
 def fibonacci_view(request: Request) -> Response:
+    bad_response = Response(
+        data={"error": "query number must be a positive integer or 0"},
+        status=400,
+    )
     num: str = request.query_params.get("n")
     if num is not None:
         try:
@@ -46,17 +50,8 @@ def fibonacci_view(request: Request) -> Response:
                     status=200,
                 )
             else:
-                return Response(
-                    data={"error": "query number must be a positive integer or 0"},
-                    status=400,
-                )
+                return bad_response
         except ValueError:
-            return Response(
-                data={"error": "query number must be a positive integer or 0"},
-                status=400,
-            )
+            return bad_response
     else:
-        return Response(
-            data={"error": "query number must be a positive integer or 0"},
-            status=400,
-        )
+        return bad_response
