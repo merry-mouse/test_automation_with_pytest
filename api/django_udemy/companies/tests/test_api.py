@@ -18,11 +18,6 @@ def test_zero_companies_should_return_empty_list(client):
     assert json.loads(response.content) == []
 
 
-@pytest.fixture
-def amazon() -> Company:
-    return Company.objects.create(name="Amazon")
-
-
 def test_one_company_exists_succeed(client, amazon):
     response = client.get(companies_url)
     response_content = json.loads(response.content)[0]
@@ -35,20 +30,15 @@ def test_one_company_exists_succeed(client, amazon):
     amazon.delete()
 
 
-@pytest.fixture()
-def company(**kwargs):
-    def _company_factory(**kwargs) -> Company:
-        company_name = kwargs.pop("name", "Test Company INC")
-        return Company.objects.create(name=company_name, **kwargs)
-
-    return _company_factory
-
-
-def test_multiple_companies_exist_ok(client, company):
-    tiktok: Company = company(name="Tiktok")
-    twitch: Company = company(name="Twitch")
-    test_company: Company = company()
-    company_names = {tiktok.name, twitch.name, test_company.name}
+@pytest.mark.parametrize(
+    "companies",
+    [["Tiktok", "Twich", "Test Compay Inc"], ["Facebook", "Instagram"]],
+    ids=["3 companies", "Meta companies"],
+    indirect=True,
+)
+def test_multiple_companies_exist_ok(client, companies):
+    company_names = set(map(lambda x: x.name, companies))
+    print(company_names)
     response_companies = client.get(companies_url).json()
     assert len(company_names) == len(response_companies)
     response_company_names = set(
