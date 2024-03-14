@@ -18,17 +18,43 @@ def test_zero_companies_should_return_empty_list(client):
     assert json.loads(response.content) == []
 
 
-def test_one_company_exists_succeed(client):
-    test_company = Company.objects.create(name="Amazon")
+@pytest.fixture
+def amazon() -> Company:
+    return Company.objects.create(name="Amazon")
+
+
+def test_one_company_exists_succeed(client, amazon):
     response = client.get(companies_url)
     response_content = json.loads(response.content)[0]
     assert response.status_code == 200
-    assert response_content.get("name") == test_company.name
+    assert response_content.get("name") == amazon.name
     assert response_content.get("status") == "Hiring"
     assert response_content.get("application_link") == ""
     assert response_content.get("notes") == ""
 
-    test_company.delete()
+    amazon.delete()
+
+
+@pytest.fixture()
+def company(**kwargs):
+    def _company_factory(**kwargs) -> Company:
+        company_name = kwargs.pop("name", "Test Company INC")
+        return Company.objects.create(name=company_name, **kwargs)
+
+    return _company_factory
+
+
+def test_multiple_companies_exist_ok(client, company):
+    tiktok: Company = company(name="Tiktok")
+    twitch: Company = company(name="Twitch")
+    test_company: Company = company()
+    company_names = {tiktok.name, twitch.name, test_company.name}
+    response_companies = client.get(companies_url).json()
+    assert len(company_names) == len(response_companies)
+    response_company_names = set(
+        map(lambda company: company.get("name"), response_companies)
+    )
+    assert company_names == response_company_names
 
 
 # ------------------- Test POST Companies -------------------

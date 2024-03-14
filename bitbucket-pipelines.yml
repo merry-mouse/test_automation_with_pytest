@@ -20,5 +20,5 @@ pipelines:
               - pip install --upgrade pip
               - pip install pipenv --upgrade
               - pipenv install --system
-              - export PYTHONPATH=$PYTHONPATH:/api/django_udemy/django_udemy
+              - export PYTHONPATH=$PYTHONPATH:/api/django_udemy
               - pytest fibonacci -s -v
