@@ -12,6 +12,7 @@ pytest-django = "*"
 pytest-xdist = "*"
 requests = "*"
 responses = "*"
+allure-pytest = "*"
 
 [dev-packages]
 
